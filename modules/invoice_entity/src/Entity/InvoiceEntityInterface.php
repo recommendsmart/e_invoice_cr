@@ -18,34 +18,21 @@ interface InvoiceEntityInterface extends RevisionableInterface, RevisionLogInter
     'FE' => [
       'code' => '01',
       'label' => 'Electronic Bill',
-      'xmltag' => 'FacturaElectronica',
-      'xmlns' => 'https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/facturaElectronica',
     ],
     'ND' => [
       'code' => '02',
       'label' => 'Debit Note',
-      'xmltag' => 'NotaDebitoElectronica',
-      'xmlns' => 'https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/notaDebitoElectronica',
     ],
     'NC' => [
       'code' => '03',
       'label' => 'Credit Note',
-      'xmltag' => 'NotaCreditoElectronica',
-      'xmlns' => 'https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/notaCreditoElectronica',
     ],
     'TE' => [
       'code' => '04',
-      'label' => 'Electronic Ticket',
-      'xmltag' => 'TiqueteElectronico',
-      'xmlns' => 'https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/tiqueteElectronico',
     ],
   ];
 
   const AVAILABLE_CURRENCY = [
-    'CRC' => [
-      'name' => 'Colones',
-      'symbol' => '₡',
-    ],
     'USD' => [
       'name' => 'Dolares',
       'symbol' => '$',

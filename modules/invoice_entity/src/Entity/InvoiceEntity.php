@@ -51,16 +51,16 @@ use Drupal\user\UserInterface;
  *     "status" = "status",
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/e-invoice-cr/invoice_entity/{invoice_entity}",
- *     "add-form" = "/admin/structure/e-invoice-cr/invoice_entity/add",
- *     "edit-form" = "/admin/structure/e-invoice-cr/invoice_entity/{invoice_entity}/edit",
- *     "delete-form" = "/admin/structure/e-invoice-cr/invoice_entity/{invoice_entity}/delete",
- *     "version-history" = "/admin/structure/e-invoice-cr/invoice_entity/{invoice_entity}/revisions",
- *     "revision" = "/admin/structure/e-invoice-cr/invoice_entity/{invoice_entity}/revisions/{invoice_entity_revision}/view",
- *     "revision_revert" = "/admin/structure/e-invoice-cr/invoice_entity/{invoice_entity}/revisions/{invoice_entity_revision}/revert",
- *     "revision_delete" = "/admin/structure/e-invoice-cr/invoice_entity/{invoice_entity}/revisions/{invoice_entity_revision}/delete",
- *     "translation_revert" = "/admin/structure/e-invoice-cr/invoice_entity/{invoice_entity}/revisions/{invoice_entity_revision}/revert/{langcode}",
- *     "collection" = "/admin/structure/e-invoice-cr/invoice_entity",
+ *     "canonical" = "/admin/structure/invoice_entity/{invoice_entity}",
+ *     "add-form" = "/admin/structure/invoice_entity/add",
+ *     "edit-form" = "/admin/structure/invoice_entity/{invoice_entity}/edit",
+ *     "delete-form" = "/admin/structure/invoice_entity/{invoice_entity}/delete",
+ *     "version-history" = "/admin/structure/invoice_entity/{invoice_entity}/revisions",
+ *     "revision" = "/admin/structure/invoice_entity/{invoice_entity}/revisions/{invoice_entity_revision}/view",
+ *     "revision_revert" = "/admin/structure/invoice_entity/{invoice_entity}/revisions/{invoice_entity_revision}/revert",
+ *     "revision_delete" = "/admin/structure/invoice_entity/{invoice_entity}/revisions/{invoice_entity_revision}/delete",
+ *     "translation_revert" = "/admin/structure/invoice_entity/{invoice_entity}/revisions/{invoice_entity_revision}/revert/{langcode}",
+ *     "collection" = "/admin/structure/invoice_entity",
  *   },
  *   field_ui_base_route = "invoice_entity.settings"
  * )
@@ -245,8 +245,8 @@ class InvoiceEntity extends RevisionableContentEntityBase implements InvoiceEnti
           'ND' => t('Debit Note'),
         ],
       ])
-      ->setRequired(TRUE)
-      ->setDefaultValue('')
+      ->setRequired(FALSE)
+      ->setDefaultValue('FE')
       ->setDisplayOptions('view', [
         'label' => 'inline',
         'type' => 'string',

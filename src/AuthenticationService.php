@@ -19,12 +19,12 @@ class AuthenticationService {
     $url = "";
     $client_id = "";
     if ($environment === "1") {
-      $url = 'https://idp.comprobanteselectronicos.go.cr/auth/realms/rut/protocol/openid-connect/token';
-      $client_id = "api-prod";
+      $url = '';
+      $client_id = "";
     }
     else {
-      $url = 'https://idp.comprobanteselectronicos.go.cr/auth/realms/rut-stag/protocol/openid-connect/token';
-      $client_id = "api-stag";
+      $url = '';
+      $client_id = "";
     }
     if ($username !== "" && $password !== "") {
       $data = [
