@@ -14,10 +14,3 @@ e_invoice_cr.options:
   requirements:
     _permission: 'access invoice settings'
 
-e_invoice_cr.settings:
-  path: '/admin/e-invoice-cr/settings'
-  defaults:
-    _form: '\Drupal\e_invoice_cr\Form\InvoiceSettingsForm'
-    _title: 'Invoice CR'
-  requirements:
-    _permission: 'access invoice settings'

@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\provider_entity\Entity\ProviderEntity;
 use Drupal\customer_entity\Entity\CustomerEntity;
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 use Drupal\tax_entity\Entity\TaxEntity;
@@ -76,9 +77,7 @@ class InvoiceEntityForm extends ContentEntityForm {
     $form['#attached']['drupalSettings']['taxsObject'] = $tax_info;
 
     $form['field_consecutive_number']['#disabled'] = 'disabled';
-
-
-    
+  
       // Generate the invoice keys.
       
     $this->formatField($form['field_total_discount']['widget'][0]['value'], TRUE, TRUE);
@@ -144,8 +143,7 @@ class InvoiceEntityForm extends ContentEntityForm {
       $entity->setNewRevision(FALSE);
     }
 
-    // Send and return a boolean if it was or not successful.
-    
+    // Send and return a boolean if it was or not successful.  
 
     // If it was successful.
     $status = parent::save($form, $form_state);
@@ -166,44 +164,19 @@ class InvoiceEntityForm extends ContentEntityForm {
   }
 
   /**
-   * Generate the xml document, sign it and send it to it's validation.
-   *
-   * @return bool
-   *   Return true if did have no error.
-   */
-
-
-  /**
    * Add the libraries.
    */
   private function addLibraries($form) {
     // Get default theme libraries.
     $theme_libraries = \Drupal::theme()->getActiveTheme()->getLibraries();
     // Look for a custom library.
-    $custom_library = $this->searchCustomLibrary($theme_libraries);
-    if ($custom_library) {
-      // This a library from a theme.
-      $form['#attached']['library'][] = $custom_library;
-    }
-    else {
+    
       // This is the default library.
-      $form['#attached']['library'][] = 'invoice_entity/invoice-rows';
-    }
+    $form['#attached']['library'][] = 'invoice_entity/invoice-rows';
+    
     // Default js library.
     $form['#attached']['library'][] = 'invoice_entity/invoice-rows-js';
     return $form;
-  }
-
-  /**
-   * Search a custom library.
-   */
-  private function searchCustomLibrary($libraries) {
-    foreach ($libraries as $index => $item) {
-      if (strpos($item, 'e-invoice-cr-form') !== FALSE) {
-        return $item;
-      }
-    }
-    return NULL;
   }
 
   /**
@@ -305,10 +278,5 @@ class InvoiceEntityForm extends ContentEntityForm {
       $field['#attributes'] = ['readonly' => 'readonly'];
     }
   }
-
-  /**
-   * Gets document type from AJAX function and return the consecutive number.
-   */
-
 
 }

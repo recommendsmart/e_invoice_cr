@@ -1,3 +1,0 @@
-services:
-  e_invoice_cr.authentication:
-    class: 'Drupal\e_invoice_cr\AuthenticationService'

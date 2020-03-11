@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - addressfield_cr
+    - address
     - provider_entity
 id: provider_entity.field_address
 field_name: field_address
 entity_type: provider_entity
-type: address_cr
+type: address
 settings: {  }
-module: addressfield_cr
+module: address
 locked: false
 cardinality: 1
 translatable: true

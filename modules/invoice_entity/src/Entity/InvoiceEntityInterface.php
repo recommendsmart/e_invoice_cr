@@ -33,8 +33,12 @@ interface InvoiceEntityInterface extends RevisionableInterface, RevisionLogInter
   ];
 
   const AVAILABLE_CURRENCY = [
+	'INR' => [
+      'name' => 'Indian Rupee',
+      'symbol' => '₹',
+    ],
     'USD' => [
-      'name' => 'Dolares',
+      'name' => 'US Dollar',
       'symbol' => '$',
     ],
     'EUR' => [

@@ -13,7 +13,4 @@ invoice-rows-js:
   version: 1.x
   js:
     js/invoice-rows.js: {}
-  dependencies:
-    - core/jquery
-    - core/jquery.once
-    - core/drupal
+

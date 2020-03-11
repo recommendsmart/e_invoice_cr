@@ -1,8 +1,0 @@
-settings:
-  allowed_values:
-    -
-      value: '01'
-      label: Producto
-    -
-      value: '02'
-      label: Servicio

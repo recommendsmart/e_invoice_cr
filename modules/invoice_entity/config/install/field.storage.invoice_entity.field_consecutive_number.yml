@@ -2,16 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
+    - field_token_value
     - invoice_entity
 id: invoice_entity.field_consecutive_number
 field_name: field_consecutive_number
 entity_type: invoice_entity
-type: string
-settings:
-  max_length: 20
-  is_ascii: false
-  case_sensitive: false
-module: core
+type: field_token_value
+settings: {  }
+module: field_token_value
 locked: false
 cardinality: 1
 translatable: true

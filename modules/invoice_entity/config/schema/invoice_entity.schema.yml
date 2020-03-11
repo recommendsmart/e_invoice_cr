@@ -1,6 +1,6 @@
 invoice_entity.settings:
   type: mapping
-  label: Consecutive Numbers for Electronice Invoice Documents
+  label: Consecutive Numbers for Electronic Invoice Documents
   mapping:
    invoice_number:
     type: string
@@ -11,12 +11,6 @@ invoice_entity.settings:
    credit_note_consecutive:
     type: string
    electronic_ticket_consecutive:
-    type: string
-   invoice_accepted_consecutive:
-    type: string
-   invoice_partial_accepted_consecutive:
-    type: string
-   invoice_rejected_consecutive:
     type: string
    consecutive_code:
     type: string

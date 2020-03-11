@@ -1,11 +1,15 @@
-name: Invoice CR invoice entity
+name: Invoice entity
 type: module
 description: This module provides the invoice entity for e-invoice.
 core: 8.x
 package: other
-interface translation project: invoice_entity
 dependencies:
-  - workflows
-  - content_moderation
   - customer_entity
   - tax_entity
+  - field_token_value
+  - serial
+  - telephone
+  - field_group
+  - paragraphs
+  - entity_print
+  - twig_field_value

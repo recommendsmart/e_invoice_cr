@@ -4,16 +4,21 @@ dependencies:
   config:
     - field.storage.invoice_entity.field_consecutive_number
   module:
+    - field_token_value
     - invoice_entity
 id: invoice_entity.invoice_entity.field_consecutive_number
 field_name: field_consecutive_number
 entity_type: invoice_entity
 bundle: invoice_entity
-label: Consecutive Number
-description: 'The consecutive number of the invoice.'
+label: consecutive_number
+description: ''
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    value: '[invoice_entity:type_of:value]-[invoice_entity:id:value]'
 default_value_callback: ''
-settings: {  }
-field_type: string
+settings:
+  field_value: '[invoice_entity:type_of]-[invoice_entity:id:value]'
+  remove_empty: 1
+field_type: field_token_value

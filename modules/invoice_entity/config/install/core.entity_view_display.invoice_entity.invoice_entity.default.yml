@@ -1,3 +1,4 @@
+                                          
 langcode: en
 status: true
 dependencies:
@@ -6,20 +7,31 @@ dependencies:
     - field.field.invoice_entity.invoice_entity.field_client
     - field.field.invoice_entity.invoice_entity.field_sale_condition
     - field.field.invoice_entity.invoice_entity.field_consecutive_number
+                                                                 
+                                                              
+                                                             
     - field.field.invoice_entity.invoice_entity.field_invoice_date
     - field.field.invoice_entity.invoice_entity.field_rows
+                                                                 
     - field.field.invoice_entity.invoice_entity.field_payment_method
     - field.field.invoice_entity.invoice_entity.field_credit_term
+                                                                    
     - field.field.invoice_entity.invoice_entity.field_total_discount
     - field.field.invoice_entity.invoice_entity.field_total_tax
     - field.field.invoice_entity.invoice_entity.field_net_sale
     - field.field.invoice_entity.invoice_entity.field_total_invoice
+                                                               
   module:
     - datetime
+    - entity_print
     - entity_reference_revisions
     - invoice_entity
     - options
+    - serial
     - user
+                     
+               
+                         
 _core:
   default_config_hash: m3DsR1m64P9vz16dIiIlaxIiqcmSZc4gOedoM-d6-wk
 id: invoice_entity.invoice_entity.default
@@ -58,13 +70,21 @@ content:
   field_consecutive_number:
     weight: 3
     label: above
-    settings:
-      link_to_entity: false
+    settings: {  }
+                           
     third_party_settings: {  }
-    type: string
+    type: serial_default_formatter
     region: content
   field_invoice_date:
+                                
     weight: 4
+                   
+                
+             
+                
+                              
+                     
+             
     label: above
     settings:
       format_type: medium
@@ -79,8 +99,19 @@ content:
     settings:
       view_mode: default
       link: ''
+              
+                         
     third_party_settings: {  }
+                        
     region: content
+                    
+             
+                
+             
+                           
+                              
+                
+                   
   field_payment_method:
     weight: 6
     label: above
@@ -89,10 +120,12 @@ content:
     type: list_default
     region: content
   field_credit_term:
+                                                
     weight: 8
     label: above
     settings:
       link_to_entity: false
+              
     third_party_settings: {  }
     type: string
     region: content

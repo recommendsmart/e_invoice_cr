@@ -3,15 +3,15 @@ status: true
 dependencies:
   module:
     - invoice_entity
+    - serial
 id: invoice_entity.field_numeric_key
 field_name: field_numeric_key
 entity_type: invoice_entity
-type: string
+type: serial
 settings:
-  max_length: 50
-  is_ascii: false
-  case_sensitive: false
-module: core
+  start_value: '1'
+  init_existing_entities: '0'
+module: serial
 locked: false
 cardinality: 1
 translatable: true

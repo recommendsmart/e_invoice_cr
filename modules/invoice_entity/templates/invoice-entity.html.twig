@@ -18,7 +18,6 @@
 
 <div{{ attributes.addClass('invoice_entity') }}>
   {% if elements %}
-    {% set currency = emitter.currency %}
     <h2>{{ invoice.document_type }}</h2>
     {# General data. #}
     <table class="first-table" border="0" cellspacing="0" cellpadding="0">
@@ -26,15 +25,13 @@
         <tr class="tr-row">
           <td>
             <div class="company-icon">
-              {% if emitter.logo_url %}
-                <img src="{{ emitter.logo_url }}">
-              {% endif %}
+
             </div>
             <div class="company-info">
-              <div class="main-name">{{ emitter.name }}</div>
-              <div>{{ emitter.commercial_name }}</div>
-              <div>{{ customer.id_label }}: {{ emitter.id }}</div>
-              <div>{{ emitter.address }}, {{ emitter.postal_code }}</div>
+              <div class="main-name">{{ customer.name }}</div>
+              <div>{{ customer.commercial_name }}</div>
+              <div>{{ customer.id_label }}: {{ customer.id }}</div>
+              <div>{{ customer.address }}, {{ customer.postal_code }}</div>
             </div>
           </td>
           <td align="right">
@@ -42,11 +39,11 @@
               <div class="background-gray">
                 <div>
                   <span class="circle"><img src="/{{ base_path }}/images/phone-icon.svg"></span>
-                  {{ emitter.phone }}
+                  {{ customer.phone }}
                 </div>
                 <div>
                   <span class="circle"><img src="/{{ base_path }}/images/email-icon.svg"></span>
-                  {{ emitter.email }}
+                  {{ customer.email }}
                 </div>
               </div>
             </div>
@@ -61,7 +58,7 @@
               <div>{{ customer.phone_label }}: {{ customer.phone }}</div>
               <div>{{ customer.email_label }}: {{ customer.email }}</div>
               {% if customer.address %}
-                <div>{{ customer.address }} {{ customer.zipcode }}</div>
+                <div>{{ customer.address }} {{ customer.postal_code }}</div>
               {% endif %}
             </div>
           </td>
@@ -124,6 +121,6 @@
   {% endif %}
   {{ elements.entity_print_view_pdf }}
   <div class="pdf-only">
-    <p>{{ "This invoice was generated according to the resolution DGT-R-48-2016 4.2."|t }}</p>
+    <p>{{ "This invoice was generated according to the company specification."|t }}</p>
   </div>
 </div>

@@ -2,6 +2,8 @@
 
 namespace Drupal\invoice_entity\Entity;
 
+use Drupal\Core\Entity\ContentEntityBase;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\RevisionableContentEntityBase;
@@ -186,6 +188,19 @@ class InvoiceEntity extends RevisionableContentEntityBase implements InvoiceEnti
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields = parent::baseFieldDefinitions($entity_type);
+	
+	// Standard field, used as unique if primary index.
+    $fields['id'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('ID'))
+      ->setDescription(t('The ID of the invoice_entity entity.'))
+      ->setReadOnly(TRUE);
+
+    // Standard field, unique outside of the scope of the current project.
+    $fields['uuid'] = BaseFieldDefinition::create('uuid')
+      ->setLabel(t('UUID'))
+      ->setDescription(t('The UUID of the invoice_entity entity.'))
+      ->setReadOnly(TRUE);
+      
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))

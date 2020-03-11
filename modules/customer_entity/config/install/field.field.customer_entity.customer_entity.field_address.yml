@@ -4,17 +4,29 @@ dependencies:
   config:
     - field.storage.customer_entity.field_address
   module:
-    - addressfield_cr
+    - address
     - customer_entity
 id: customer_entity.customer_entity.field_address
 field_name: field_address
 entity_type: customer_entity
 bundle: customer_entity
-label: 'Address'
+label: address
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: address_cr
+settings:
+  available_countries: {  }
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    sortingCode:
+      override: hidden
+  fields: {  }
+field_type: address

@@ -123,8 +123,6 @@ third_party_settings:
         description: ''
         required_fields: true
       label: 'Client info'
-_core:
-  default_config_hash: h2g64vLTnnHnzqkw1cFBaf5v5L8HgcnpKwryI079dto
 id: invoice_entity.invoice_entity.default
 targetEntityType: invoice_entity
 bundle: invoice_entity
@@ -261,6 +259,5 @@ content:
     third_party_settings: {  }
 hidden:
   field_numeric_key: true
-  moderation_state: true
   name: true
   user_id: true

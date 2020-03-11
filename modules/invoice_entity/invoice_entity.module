@@ -7,6 +7,7 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
+use Drupal\provider_entity\Entity\ProviderEntity;
 use Drupal\customer_entity\Entity\CustomerEntity;
 use Drupal\file\Entity\File;
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
@@ -36,56 +37,10 @@ function invoice_entity_config_error() {
 /**
  * Implements hook_entity_operation().
  */
-function invoice_entity_entity_operation(EntityInterface $entity) {
-  $type = $entity->getEntityType();
-  if ($type->id() === "invoice_entity") {
-    $status = $entity->get('moderation_state')->value;
-    if ($status === "draft") {
-      $key = $entity->get('field_numeric_key')->value;
-      $operations = [];
-      $operations['validate'] = [
-        'title' => t('Validate'),
-        'url' => Url::fromRoute("invoice_entity.validate", ["key" => $key, "id" => $entity->id()]),
-        'weight' => 0,
-      ];
-      return $operations;
-    }
-    if ($status === "published") {
-      $operations = [];
-      $operations['View'] = [
-        'title' => t('View'),
-        'url' => Url::fromRoute("entity.invoice_entity.canonical", ["invoice_entity" => $entity->id()]),
-        'weight' => 0,
-      ];
-      return $operations;
-    }
-  }
-}
 
 /**
  * Implements hook_cron().
  */
-function invoice_entity_cron() {
-  // Update the invoices states.
-  $query = \Drupal::entityQuery('invoice_entity');
-  $nids = $query->execute();
-  if (count($nids) > 0) {
-    $entity_manager = \Drupal::entityManager();
-    foreach ($nids as $index => $item) {
-      $entity = $entity_manager->getStorage('invoice_entity')->load($item);
-      if ($entity->get('moderation_state')->value === 'draft') {
-        $type_of = $entity->get('type_of')->getValue()[0]['value'];
-
-        /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-        $invoice_service = \Drupal::service('invoice_entity.service');
-        $invoice_service->setConsecutiveNumber($type_of);
-        $invoice_service->validateInvoiceEntity($entity);
-        // Show a notification massage.
-        drupal_set_message(t("The invoices have been verified during the cron process."), 'status');
-      }
-    }
-  }
-}
 
 /**
  * Implements hook_preprocess_page().
@@ -127,27 +82,34 @@ function invoice_entity_preprocess_field(&$variables, $hook) {
  * Implements hook_preprocess_invoice_entity().
  */
 function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
-  // Emitter data.
-  $emitter = [];
+  // Emit data.
+  $provider = [];
   $customer = [];
   $invoice = [];
-  $config = \Drupal::config('e_invoice_cr.settings');
-  $file = $config->get('invoice_logo_file');
-  if (!is_null($file) && count($file) !== 0) {
-    $file_uri = File::load($file[0])->getFileUri();
-    $logo_path = file_url_transform_relative(file_create_url($file_uri));
-    $emitter['logo_url'] = $logo_path;
+ 
+  
+  
+  
+  // Providers data.
+  if (isset($variables['elements']['field_providers'][0]['#options']['entity'])) {
+    $entity = $variables['elements']['field_providers'][0]['#options']['entity'];
+    if (!is_null($entity)) {
+      $providers_id = $entity->id();
+      $providers = ProviderEntity::load($provider_id);
+      $providers['id'] = $provider->get('field_provider_id')->value;
+      $providers['id_label'] = $provider->getFieldDefinition('field_provider_id')->label();
+      $providers['name'] = $provider->get('name')->value;
+      $providers['email'] = $provider->get('field_email')->value;
+      $providers['email_label'] = $provider->getFieldDefinition('field_email')->label();
+      $providers['phone'] = $provider->get('field_phone')->value;
+      $providers['phone_label'] = $provider->getFieldDefinition('field_phone')->label();
+      $address = $provider->get('field_address')->getValue();
+      if (count($address) !== 0) {
+        $providers['address'] = $address[0]['address_line1'] . ", " . $address[0]['locality'] . ", " . $address[0]['administrative_area'] . ".";
+      }
+      $providers['postal_code'] = $address[0]['postal_code'];
+    }
   }
-  $emitter['name'] = $config->get('name');
-  $emitter['commercial_name'] = $config->get('commercial_name');
-  $emitter['id'] = $config->get('id');
-  $emitter['email'] = $config->get('email');
-  $emitter['phone'] = $config->get('phone');
-  $emitter['fax'] = $config->get('fax');
-  $emitter['postal_code'] = $config->get('postal_code');
-  $emitter['address'] = $config->get('address');
-  $currency_code = $variables['elements']['#invoice_entity']->get('field_currency')->value;
-  $emitter['currency'] = InvoiceEntityInterface::AVAILABLE_CURRENCY[$currency_code]['symbol'];
   // Client data.
   if (isset($variables['elements']['field_client'][0]['#options']['entity'])) {
     $entity = $variables['elements']['field_client'][0]['#options']['entity'];
@@ -163,9 +125,9 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
       $customer['phone_label'] = $client->getFieldDefinition('field_phone')->label();
       $address = $client->get('field_address')->getValue();
       if (count($address) !== 0) {
-        $customer['address'] = $address[0]['province'] . ", " . $address[0]['canton'] . ", " . $address[0]['district'] . ".";
+        $customer['address'] = $address[0]['address_line1'] . ", " . $address[0]['locality'] . ", " . $address[0]['administrative_area'] . ".";
       }
-      $customer['zipcode'] = $address[0]['zipcode'];
+      $customer['postal_code'] = $address[0]['postal_code'];
     }
   }
 
@@ -197,7 +159,8 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
   $moduel_path = $module_handler->getModule('invoice_entity')->getPath();
 
   // Send the data.
-  $variables['emitter'] = $emitter;
+
+  $variables['providers'] = $provider;
   $variables['customer'] = $customer;
   $variables['invoice'] = $invoice;
   $variables['base_path'] = $moduel_path;

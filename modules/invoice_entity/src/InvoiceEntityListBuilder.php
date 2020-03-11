@@ -23,10 +23,8 @@ class InvoiceEntityListBuilder extends EntityListBuilder {
     $header['client'] = $this->t('Client');
     $header['consecutive'] = $this->t('Consecutive Number');
     $header['type_of'] = $this->t('Type');
-    $header['status'] = $this->t('Status');
     $header['credit'] = $this->t('Credit Term');
     $header['total'] = $this->t('Total');
-    $header['download'] = $this->t('Download');
     return $header + parent::buildHeader();
   }
 
@@ -35,22 +33,7 @@ class InvoiceEntityListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\invoice_entity\Entity\InvoiceEntity */
-    $state = $entity->get('moderation_state')->value;
-    $state_label = "";
-
-    switch ($state) {
-      case "draft":
-        $state_label = t("In validation");
-        break;
-
-      case "published":
-        $state_label = t("Accepted");
-        break;
-
-      case "rejected":
-        $state_label = t("Rejected");
-        break;
-    }
+    
 
     /** @var \Drupal\Core\Field\BaseFieldDefinition $fd */
     $fd = $entity->getFieldDefinition('type_of');
@@ -72,7 +55,7 @@ class InvoiceEntityListBuilder extends EntityListBuilder {
     );
     $row['consecutive'] = $entity->get('field_consecutive_number')->getValue()[0]['value'];
     $row['type_of'] = $options[$entity->getInvoiceType()];
-    $row['status'] = $state_label;
+
 
     if (isset($entity->get('field_credit_term')->getValue()[0]['value'])) {
       $row['credit'] = $entity->get('field_credit_term')->getValue()[0]['value'];
@@ -83,16 +66,6 @@ class InvoiceEntityListBuilder extends EntityListBuilder {
 
     $row['total'] = $currency . ' ' . $total_invoice;
 
-    if (strcmp($state, 'published') == 0) {
-      $row['download'] = Link::createFromRoute(
-        $this->t('Download'),
-        'invoice_entity.zip',
-        ['id' => $entity->id()]
-      );
-    }
-    else {
-      $row['download'] = $this->t('Download');
-    }
 
     return $row + parent::buildRow($entity);
   }

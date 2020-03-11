@@ -9,10 +9,3 @@ e_envoice_cr.manage:
   parent: e_envoice_cr.content
   title: 'Global Configuration'
   weight: 100
-
-e_envoice_cr.admin:
-  title: 'Invoice Settings'
-  description: 'Invoice CR settings'
-  parent: e_envoice_cr.manage
-  route_name: e_invoice_cr.settings
-  weight: 105
